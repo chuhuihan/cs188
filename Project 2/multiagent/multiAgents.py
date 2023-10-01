@@ -199,29 +199,57 @@ class MinimaxAgent(MultiAgentSearchAgent):
         "*** YOUR CODE HERE ***"
         #util.raiseNotDefined()
 
+        # def miniMax(self, new_gameState, agentIndex, depth):
+        #     if(depth == 0 or new_gameState.isWin() or new_gameState.isLose()):
+        #         return self.evaluationFunction(new_gameState)
+        #     elif(agentIndex == 0):
+        #         legalActions = new_gameState.getLegalActions(agentIndex)
+        #         branches = []
+        #         for action in legalActions: 
+        #             branches.append(new_gameState.generateSuccessor(agentIndex, action))
+        #         all_moves = [ miniMax(self, b, (agentIndex + 1) % new_gameState.getNumAgents(), depth - 1)   for b in branches  ]
+        #         if (depth == self.depth):
+        #             return legalActions[all_moves.index(max(all_moves))]
+        #         else:
+        #             return max(all_moves)
+        #     else:
+        #         legalActions = new_gameState.getLegalActions(agentIndex)
+        #         branches = []
+        #         for action in legalActions:
+        #             branches.append(new_gameState.generateSuccessor(agentIndex, action))
+        #         all_moves = [ miniMax(self, b, (agentIndex + 1) % new_gameState.getNumAgents(), depth - 1)   for b in branches  ]
+        #         if (depth == self.depth):
+        #             return legalActions[all_moves.index(min(all_moves))]
+        #         else:
+        #             return min(all_moves)
+
+        # return miniMax(self, gameState, 0, self.depth)
+
         def miniMax(self, new_gameState, agentIndex, depth):
+
             if(depth == 0 or new_gameState.isWin() or new_gameState.isLose()):
                 return self.evaluationFunction(new_gameState)
-            elif(agentIndex == 0):
+            
+            next_depth = depth
+            if(agentIndex == new_gameState.getNumAgents() - 1):
+                next_depth -= 1
+
+            if(agentIndex == 0):
                 legalActions = new_gameState.getLegalActions(agentIndex)
                 branches = []
                 for action in legalActions: 
                     branches.append(new_gameState.generateSuccessor(agentIndex, action))
-                all_moves = [ miniMax(self, b, (agentIndex + 1) % new_gameState.getNumAgents(), depth - 1)   for b in branches  ]
-                if (depth == self.depth):
+                all_moves = [ miniMax(self, b, (agentIndex + 1) % new_gameState.getNumAgents(), next_depth)   for b in branches  ]
+                if (self.depth == depth):
                     return legalActions[all_moves.index(max(all_moves))]
-                else:
-                    return max(all_moves)
+                return max(all_moves)
             else:
                 legalActions = new_gameState.getLegalActions(agentIndex)
                 branches = []
                 for action in legalActions:
                     branches.append(new_gameState.generateSuccessor(agentIndex, action))
-                all_moves = [ miniMax(self, b, (agentIndex + 1) % new_gameState.getNumAgents(), depth - 1)   for b in branches  ]
-                if (depth == self.depth):
-                    return legalActions[all_moves.index(min(all_moves))]
-                else:
-                    return min(all_moves)
+                all_moves = [ miniMax(self, b, (agentIndex + 1) % new_gameState.getNumAgents(), next_depth)   for b in branches  ]
+                return min(all_moves)
 
         return miniMax(self, gameState, 0, self.depth)
         
@@ -236,7 +264,170 @@ class AlphaBetaAgent(MultiAgentSearchAgent):
         Returns the minimax action using self.depth and self.evaluationFunction
         """
         "*** YOUR CODE HERE ***"
-        util.raiseNotDefined()
+        # util.raiseNotDefined()
+        
+        # def maxValue(state, a, beta, agentIndex):
+        #     v = float('-inf')
+        #     legalActions = state.getLegalActions(agentIndex)
+        #     branches = []
+        #     for action in legalActions:
+        #         branches.append(state.generateSuccessor(agentIndex, action))
+            
+        #     for successor in branches:
+        #         eval = 
+        #         v = max(v, )
+
+        # def minValue(state, a, beta):
+
+        # def alphaBetaMiniMax(self, new_gameState, agentIndex, depth, alpha, beta):
+            
+        #     # check if depth is at 0 or if game is ending
+        #     if(depth == 0 or new_gameState.isWin() or new_gameState.isLose()):
+        #         return self.evaluationFunction(new_gameState)
+
+        #     next_depth = depth
+
+        #     # decrements depth if we are on the last ghost
+        #     if(agentIndex == new_gameState.getNumAgents() - 1):
+        #         next_depth -= 1
+            
+        #     # maximizing (pacman)
+        #     if(agentIndex == 0):
+                
+        #         best_score = float('-inf')
+        #         # get all of states of the legal actions for pacman at this state and put it into branches
+        #         legalActions = new_gameState.getLegalActions(agentIndex)
+        #         branches = []
+        #         for action in legalActions:
+        #             branches.append(new_gameState.generateSuccessor(agentIndex, action))
+                
+        #         # all_moves = []
+        #         # recurse into each state and get its score/prune it
+        #         for state in branches:
+        #             evalScore = alphaBetaMiniMax(self, state, (agentIndex + 1) % new_gameState.getNumAgents(), next_depth, alpha, beta)
+        #             best_score = max(best_score, evalScore)
+        #             if (best_score >= beta):
+        #                 break
+        #             alpha = max(alpha, best_score)
+        #         # if(self.depth == depth):
+        #         #     return legalActions[all_moves.index(max(all_moves))]
+        #         return best_score
+            
+        #     else:
+
+        #         best_score = float('inf')
+
+        #         # get all of states of the legal actions for pacman at this state and put it into branches
+        #         legalActions = new_gameState.getLegalActions(agentIndex)
+        #         branches = []
+        #         for action in legalActions:
+        #             branches.append(new_gameState.generateSuccessor(agentIndex, action))
+                
+        #         # recurse into each state and get its score/prune it
+        #         for state in branches:
+        #             evalScore = alphaBetaMiniMax(self, state, (agentIndex + 1) % new_gameState.getNumAgents(), next_depth, alpha, beta)
+        #             best_score = min(best_score, evalScore)
+        #             beta = min(beta, best_score)
+        #             if (best_score <= alpha):
+        #                 break
+        #             beta = min(beta, best_score)
+        #         return best_score
+        
+        # infinity = float('inf')
+        # negInfinity = float('-inf')
+        
+        # return alphaBetaMiniMax(self, gameState, 0, self.depth, negInfinity, infinity)
+
+        # def alphaBetaMiniMax(self, new_gameState, agentIndex, depth, alpha, beta):
+            
+        #     # check if depth is at 0 or if game is ending
+        #     if(depth == 0 or new_gameState.isWin() or new_gameState.isLose()):
+        #         return self.evaluationFunction(new_gameState)
+            
+        #     # maximizing (pacman)
+        #     if(agentIndex == 0):
+                
+        #         best_score = float('-inf')
+        #         # get all of states of the legal actions for pacman at this state and put it into branches
+        #         legalActions = new_gameState.getLegalActions(agentIndex)
+        #         for action in legalActions:
+        #             childState = new_gameState.generateSuccessor(agentIndex, action)
+        #             best_score = max(best_score, alphaBetaMiniMax(self, childState, (agentIndex + 1) % new_gameState.getNumAgents(), depth, alpha, beta))
+        #             alpha = max(alpha, best_score)
+        #             if (beta <= alpha):
+        #                 break
+        #         # if(self.depth == depth):
+        #         #     return legalActions[all_moves.index(max(all_moves))]
+        #         return best_score
+            
+        #     else:
+
+        #         best_score = float('inf')
+
+        #         # get all of states of the legal actions for pacman at this state and put it into branches
+        #         legalActions = new_gameState.getLegalActions(agentIndex)
+        #         for action in legalActions:
+        #             childState = new_gameState.generateSuccessor(agentIndex, action)
+        #             # if ghost is the last agent
+        #             if(agentIndex == new_gameState.getNumAgents()):
+        #                 best_score = min(best_score, alphaBetaMiniMax(self, childState, (agentIndex + 1) % new_gameState.getNumAgents(), depth - 1, alpha, beta))
+        #             else:
+        #                 best_score = min(best_score, alphaBetaMiniMax(self, childState, (agentIndex + 1) % new_gameState.getNumAgents(), depth, alpha, beta))
+        #             beta = min(beta, best_score)
+        #             if (beta <= best_score):
+        #                 break
+        #         return best_score
+        
+        # infinity = float('inf')
+        # negInfinity = float('-inf')
+        
+        # return alphaBetaMiniMax(self, gameState, 0, self.depth, negInfinity, infinity)
+
+        def alphaBetaMiniMax(self, new_gameState, agentIndex, depth, alpha, beta):
+            
+            # check if depth is at 0 or if game is ending
+            if(depth == 0 or new_gameState.isWin() or new_gameState.isLose()):
+                return self.evaluationFunction(new_gameState)
+
+            next_depth = depth
+
+            # decrements depth if we are on the last ghost
+            if(agentIndex == new_gameState.getNumAgents() - 1):
+                next_depth -= 1
+            
+            # maximizing (pacman)
+            if(agentIndex == 0):
+                best_score = float('-inf')
+                legalActions = new_gameState.getLegalActions(agentIndex)
+                all_moves = []
+                for action in legalActions:
+                    next_state = new_gameState.generateSuccessor(agentIndex, action)
+                    curr_score = alphaBetaMiniMax(self, next_state, (agentIndex + 1) % new_gameState.getNumAgents(), next_depth, alpha, beta)
+                    best_score = max(best_score, curr_score)
+                    alpha = max(alpha, best_score)
+                    if alpha > beta:
+                        break
+                    all_moves.append(curr_score)
+                if self.depth == depth:
+                    return legalActions[all_moves.index(max(all_moves))]
+                return best_score
+
+
+            else:
+                best_score = float('inf')
+                legalActions = new_gameState.getLegalActions(agentIndex)
+                for action in legalActions:
+                    next_state = new_gameState.generateSuccessor(agentIndex, action)
+                    curr_score = alphaBetaMiniMax(self, next_state, (agentIndex + 1) % new_gameState.getNumAgents(), next_depth, alpha, beta)
+                    best_score = min(best_score, curr_score)
+                    beta = min(best_score, curr_score)
+                    if alpha > beta:
+                        break
+                return best_score
+        
+        return alphaBetaMiniMax(self, gameState, 0, self.depth, float('-inf'), float('inf'))
+        
+
 
 class ExpectimaxAgent(MultiAgentSearchAgent):
     """
@@ -251,7 +442,35 @@ class ExpectimaxAgent(MultiAgentSearchAgent):
         legal moves.
         """
         "*** YOUR CODE HERE ***"
-        util.raiseNotDefined()
+        # util.raiseNotDefined()
+
+        def miniMax(self, new_gameState, agentIndex, depth):
+
+            if(depth == 0 or new_gameState.isWin() or new_gameState.isLose()):
+                return self.evaluationFunction(new_gameState)
+            
+            next_depth = depth
+            if(agentIndex == new_gameState.getNumAgents() - 1):
+                next_depth -= 1
+
+            if(agentIndex == 0):
+                legalActions = new_gameState.getLegalActions(agentIndex)
+                branches = []
+                for action in legalActions: 
+                    branches.append(new_gameState.generateSuccessor(agentIndex, action))
+                all_moves = [ miniMax(self, b, (agentIndex + 1) % new_gameState.getNumAgents(), next_depth)   for b in branches  ]
+                if (self.depth == depth):
+                    return legalActions[all_moves.index(max(all_moves))]
+                return max(all_moves)
+            else:
+                legalActions = new_gameState.getLegalActions(agentIndex)
+                branches = []
+                for action in legalActions:
+                    branches.append(new_gameState.generateSuccessor(agentIndex, action))
+                all_moves = [ miniMax(self, b, (agentIndex + 1) % new_gameState.getNumAgents(), next_depth)   for b in branches  ]
+                return float(sum(all_moves)) / len(all_moves)
+
+        return miniMax(self, gameState, 0, self.depth)
 
 def betterEvaluationFunction(currentGameState: GameState):
     """
@@ -261,7 +480,72 @@ def betterEvaluationFunction(currentGameState: GameState):
     DESCRIPTION: <write something here so we know what you did>
     """
     "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
+    # util.raiseNotDefined()
+
+    newPos = currentGameState.getPacmanPosition()
+    newFood = currentGameState.getFood()
+    newGhostStates = currentGameState.getGhostStates()
+    newScaredTimes = [ghostState.scaredTimer for ghostState in newGhostStates]
+
+    score = 0
+
+    newGhostPositions = currentGameState.getGhostPositions()
+    newCapsulePositions = currentGameState.getCapsules()
+
+    distanceFromGhosts = []
+    distanceFromFood = []
+    distanceFromCapsules = []
+
+    for position in newGhostPositions:
+        distanceFromGhosts.append(manhattanDistance(newPos, position))
+
+    amountOfDotsRemaining = 0
+
+    for rowInd, row in enumerate(newFood):
+            for colInd, obj in enumerate(row):
+                if(obj == True): 
+                    amountOfDotsRemaining += 1
+                    xy = [rowInd, colInd]
+                    distanceFromFood.append(manhattanDistance(newPos, xy))
+
+    for position in newCapsulePositions:
+        distanceFromCapsules.append(manhattanDistance(newPos, position))
+
+    #Getting min distances
+    closestGhost = min(distanceFromGhosts)
+    if(len(distanceFromCapsules) > 0):
+        closestCapsule = min(distanceFromCapsules)
+    else: 
+        closestCapsule = 0
+
+    amountCapsulesRemaining = len(newCapsulePositions)
+    if(len(distanceFromFood) > 0):
+        closestFood = min(distanceFromFood)
+    else:
+        closestFood = 0
+
+    #Score Calculations
+    score += -50 * amountOfDotsRemaining
+    score += -100 * amountCapsulesRemaining
+
+    if (max(newScaredTimes) > 0):
+        if closestGhost < 3:
+            score += max(newScaredTimes)*10 / (closestGhost + 1)
+        else:
+            score += max(newScaredTimes)*5 / (closestGhost + 1)
+    else:
+        if(closestGhost < 2):
+            score += -10000
+
+    if not closestFood == 0:
+        score += 50 / (closestFood + 1)
+
+    if closestCapsule > 0:
+        score += 100 / (closestCapsule + 1)
+
+    score += 500 / currentGameState.getScore()
+
+    return score
 
 # Abbreviation
 better = betterEvaluationFunction
