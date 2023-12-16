@@ -254,7 +254,7 @@ class LanguageIDModel(object):
         self.batch = 200
         self.learning_rate = 0.5
 
-        self.W = nn.Parameter(self.num_chars, 100)
+        self.weight = nn.Parameter(self.num_chars, 100)
         self.hidden = nn.Parameter(100, 100)
         self.output = nn.Parameter(100, 5)
 
@@ -291,9 +291,9 @@ class LanguageIDModel(object):
         length = len(xs)
         for i in range(length):
             if i == 0:
-                layer = nn.ReLU(nn.Linear(xs[i], self.W))
+                layer = nn.ReLU(nn.Linear(xs[i], self.weight))
             else:
-                linear = nn.Linear(xs[i], self.W)
+                linear = nn.Linear(xs[i], self.weight)
                 linear_hidden = nn.Linear(layer, self.hidden)
                 layer = nn.ReLU(nn.Add(linear, linear_hidden))
 
@@ -326,8 +326,8 @@ class LanguageIDModel(object):
             data = dataset.iterate_once(self.batch)
             for x, y in data:
                 loss = self.get_loss(x, y)
-                g_W, g_hidden, g_output = nn.gradients(loss, [self.W, self.hidden, self.output])
-                self.W.update(g_W, -self.learning_rate)
+                g_weight, g_hidden, g_output = nn.gradients(loss, [self.weight, self.hidden, self.output])
+                self.weight.update(g_weight, -self.learning_rate)
                 self.hidden.update(g_hidden, -self.learning_rate)
                 self.output.update(g_output, -self.learning_rate)
 
